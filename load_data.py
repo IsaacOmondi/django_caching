@@ -1,0 +1,411 @@
+import logging
+import requests
+
+
+logging.basicConfig(level=logging.DEBUG)
+
+PRODUCTS_URL = "http://localhost:8000/store/books/create/"
+products = [{
+  "name": "Tresom",
+  "description": "https://miitbeian.gov.cn/lorem/ipsum.jpg",
+  "price": "amcentagart0@desdev.cn"
+}, {
+  "name": "Sonair",
+  "description": "http://hhs.gov/lobortis/vel/dapibus/at.xml",
+  "price": "rpadly1@huffingtonpost.com"
+}, {
+  "name": "Sonsing",
+  "description": "https://desdev.cn/in.aspx",
+  "price": "jgargett2@dot.gov"
+}, {
+  "name": "Holdlamis",
+  "description": "https://networkadvertising.org/est/phasellus/sit/amet.jsp",
+  "price": "msommerlie3@plala.or.jp"
+}, {
+  "name": "Voyatouch",
+  "description": "http://altervista.org/convallis/nunc/proin/at.js",
+  "price": "rmcshirie4@dmoz.org"
+}, {
+  "name": "Regrant",
+  "description": "https://bbc.co.uk/at.html",
+  "price": "asproul5@imgur.com"
+}, {
+  "name": "Bitwolf",
+  "description": "https://paginegialle.it/duis.jsp",
+  "price": "jbuten6@dmoz.org"
+}, {
+  "name": "Cardify",
+  "description": "http://seesaa.net/semper/interdum/mauris/ullamcorper.xml",
+  "price": "mtwamley7@canalblog.com"
+}, {
+  "name": "Zaam-Dox",
+  "description": "http://homestead.com/ac/est/lacinia/nisi/venenatis.png",
+  "price": "cgirauld8@tinyurl.com"
+}, {
+  "name": "Daltfresh",
+  "description": "http://unesco.org/et/commodo.jsp",
+  "price": "sbodega9@lulu.com"
+}, {
+  "name": "Kanlam",
+  "description": "https://dagondesign.com/neque/libero/convallis/eget.aspx",
+  "price": "hperrena@vimeo.com"
+}, {
+  "name": "Sub-Ex",
+  "description": "http://about.com/ac/nibh/fusce/lacus/purus/aliquet/at.png",
+  "price": "msculpherb@loc.gov"
+}, {
+  "name": "Bigtax",
+  "description": "http://netvibes.com/quis/justo.jsp",
+  "price": "mhearec@slashdot.org"
+}, {
+  "name": "Bigtax",
+  "description": "https://wordpress.org/fusce/lacus/purus/aliquet/at/feugiat/non.html",
+  "price": "cbrewertond@chronoengine.com"
+}, {
+  "name": "Lotlux",
+  "description": "https://jimdo.com/ut/tellus/nulla/ut/erat/id/mauris.js",
+  "price": "ecapitanoe@nba.com"
+}, {
+  "name": "Vagram",
+  "description": "http://marriott.com/et/commodo/vulputate.js",
+  "price": "sparsallf@imgur.com"
+}, {
+  "name": "Stronghold",
+  "description": "http://marketwatch.com/sapien.aspx",
+  "price": "bhollindaleg@exblog.jp"
+}, {
+  "name": "Tresom",
+  "description": "http://nationalgeographic.com/vel.jpg",
+  "price": "htisorh@lulu.com"
+}, {
+  "name": "Bytecard",
+  "description": "http://sitemeter.com/nisi/nam/ultrices/libero/non/mattis/pulvinar.html",
+  "price": "csuttlei@hud.gov"
+}, {
+  "name": "Y-find",
+  "description": "http://home.pl/sem/mauris/laoreet/ut/rhoncus.png",
+  "price": "zbanghej@friendfeed.com"
+}, {
+  "name": "Job",
+  "description": "http://dmoz.org/sapien/placerat.xml",
+  "price": "ddraiseyk@merriam-webster.com"
+}, {
+  "name": "Tampflex",
+  "description": "https://mediafire.com/suspendisse/ornare/consequat/lectus/in/est.js",
+  "price": "taguilarl@shutterfly.com"
+}, {
+  "name": "Zamit",
+  "description": "http://virginia.edu/tristique/est/et.png",
+  "price": "wmurrigansm@google.it"
+}, {
+  "name": "Treeflex",
+  "description": "https://patch.com/lobortis/ligula/sit/amet.png",
+  "price": "askelhornen@bbc.co.uk"
+}, {
+  "name": "Span",
+  "description": "https://alexa.com/imperdiet/sapien/urna.xml",
+  "price": "smaccaugheyo@sitemeter.com"
+}, {
+  "name": "Treeflex",
+  "description": "https://flickr.com/sapien/in/sapien/iaculis/congue/vivamus/metus.jpg",
+  "price": "abanasevichp@wix.com"
+}, {
+  "name": "Sonsing",
+  "description": "http://typepad.com/gravida/nisi/at/nibh.png",
+  "price": "aantoniadesq@istockphoto.com"
+}, {
+  "name": "Tin",
+  "description": "http://sakura.ne.jp/nam.jpg",
+  "price": "rmunseyr@adobe.com"
+}, {
+  "name": "Mat Lam Tam",
+  "description": "https://xing.com/ligula.jpg",
+  "price": "cainslees@sogou.com"
+}, {
+  "name": "Y-Solowarm",
+  "description": "https://ifeng.com/eu/interdum/eu/tincidunt/in/leo.json",
+  "price": "rcreamert@macromedia.com"
+}, {
+  "name": "Kanlam",
+  "description": "https://mysql.com/in.png",
+  "price": "hmateiu@berkeley.edu"
+}, {
+  "name": "Aerified",
+  "description": "https://nyu.edu/ut/odio/cras.js",
+  "price": "nlegallev@vinaora.com"
+}, {
+  "name": "Prodder",
+  "description": "http://privacy.gov.au/est/et/tempus/semper/est/quam.jpg",
+  "price": "lnormabellw@unc.edu"
+}, {
+  "name": "Kanlam",
+  "description": "http://google.es/ac/enim/in/tempor.jsp",
+  "price": "cbalconx@phpbb.com"
+}, {
+  "name": "Redhold",
+  "description": "https://feedburner.com/metus/arcu/adipiscing.jsp",
+  "price": "apindary@spiegel.de"
+}, {
+  "name": "Voltsillam",
+  "description": "http://upenn.edu/a.html",
+  "price": "jstevensz@globo.com"
+}, {
+  "name": "Fixflex",
+  "description": "http://com.com/nec/euismod.png",
+  "price": "afrankton10@moonfruit.com"
+}, {
+  "name": "Hatity",
+  "description": "http://utexas.edu/libero.jpg",
+  "price": "cwonfar11@vinaora.com"
+}, {
+  "name": "Veribet",
+  "description": "http://icq.com/justo/in/blandit/ultrices.jpg",
+  "price": "ksherreard12@cnet.com"
+}, {
+  "name": "Zamit",
+  "description": "http://bigcartel.com/vestibulum/ante/ipsum/primis/in/faucibus/orci.js",
+  "price": "nhinrich13@columbia.edu"
+}, {
+  "name": "Subin",
+  "description": "https://wikispaces.com/interdum/in/ante/vestibulum/ante/ipsum.jsp",
+  "price": "dbutterley14@kickstarter.com"
+}, {
+  "name": "Voyatouch",
+  "description": "http://photobucket.com/nisl/venenatis/lacinia/aenean/sit/amet.jpg",
+  "price": "manear15@dyndns.org"
+}, {
+  "name": "Holdlamis",
+  "description": "https://exblog.jp/elit/proin/interdum/mauris/non.png",
+  "price": "wschapiro16@t.co"
+}, {
+  "name": "Bitwolf",
+  "description": "http://china.com.cn/nulla/quisque/arcu.jsp",
+  "price": "cdutteridge17@slashdot.org"
+}, {
+  "name": "Viva",
+  "description": "https://apache.org/mauris/non/ligula/pellentesque.jsp",
+  "price": "thughlin18@fastcompany.com"
+}, {
+  "name": "Viva",
+  "description": "https://hhs.gov/non/pretium/quis/lectus/suspendisse/potenti.jpg",
+  "price": "lfutcher19@aol.com"
+}, {
+  "name": "Rank",
+  "description": "https://mediafire.com/imperdiet/et.json",
+  "price": "cgarrould1a@marketwatch.com"
+}, {
+  "name": "Vagram",
+  "description": "http://deviantart.com/et/ultrices/posuere/cubilia/curae/mauris/viverra.json",
+  "price": "pallen1b@usgs.gov"
+}, {
+  "name": "Sonair",
+  "description": "https://example.com/duis/aliquam/convallis/nunc/proin.js",
+  "price": "rsaiger1c@hhs.gov"
+}, {
+  "name": "Treeflex",
+  "description": "https://deliciousdays.com/nulla.xml",
+  "price": "yniven1d@diigo.com"
+}, {
+  "name": "Cardify",
+  "description": "http://mail.ru/lorem/ipsum/dolor.jpg",
+  "price": "cmcdill1e@devhub.com"
+}, {
+  "name": "Zontrax",
+  "description": "https://yelp.com/posuere/metus/vitae/ipsum/aliquam/non.jsp",
+  "price": "cwinser1f@youtube.com"
+}, {
+  "name": "Tin",
+  "description": "https://ebay.com/arcu/sed/augue/aliquam/erat/volutpat.jpg",
+  "price": "edelagnes1g@cdbaby.com"
+}, {
+  "name": "Solarbreeze",
+  "description": "http://virginia.edu/in.json",
+  "price": "jroskilly1h@de.vu"
+}, {
+  "name": "Fixflex",
+  "description": "http://vkontakte.ru/nulla/dapibus/dolor/vel.jpg",
+  "price": "ggurton1i@ucla.edu"
+}, {
+  "name": "Y-find",
+  "description": "https://histats.com/lorem/vitae.jpg",
+  "price": "crossi1j@seesaa.net"
+}, {
+  "name": "Stringtough",
+  "description": "https://blog.com/augue/aliquam/erat/volutpat/in.json",
+  "price": "cgarrish1k@bloomberg.com"
+}, {
+  "name": "Prodder",
+  "description": "https://mapquest.com/massa/volutpat.json",
+  "price": "blies1l@unc.edu"
+}, {
+  "name": "Holdlamis",
+  "description": "http://github.com/pellentesque/at/nulla.jpg",
+  "price": "rwillox1m@360.cn"
+}, {
+  "name": "Subin",
+  "description": "https://nationalgeographic.com/cubilia/curae.js",
+  "price": "jcartan1n@domainmarket.com"
+}, {
+  "name": "Temp",
+  "description": "https://hc360.com/lacinia.jpg",
+  "price": "mhirthe1o@constantcontact.com"
+}, {
+  "name": "Kanlam",
+  "description": "https://usa.gov/diam/id/ornare.xml",
+  "price": "mpitkeathly1p@amazon.co.uk"
+}, {
+  "name": "Rank",
+  "description": "https://economist.com/porttitor.html",
+  "price": "amcdougle1q@newsvine.com"
+}, {
+  "name": "Hatity",
+  "description": "https://wunderground.com/in.xml",
+  "price": "tbulley1r@ezinearticles.com"
+}, {
+  "name": "Zoolab",
+  "description": "http://icq.com/elementum/in/hac/habitasse/platea/dictumst.json",
+  "price": "ckubis1s@abc.net.au"
+}, {
+  "name": "Tin",
+  "description": "https://ucoz.ru/turpis/integer/aliquet/massa/id/lobortis/convallis.jsp",
+  "price": "wwrefford1t@blogspot.com"
+}, {
+  "name": "Namfix",
+  "description": "http://sciencedirect.com/potenti/in/eleifend/quam/a/odio/in.jpg",
+  "price": "gkenn1u@so-net.ne.jp"
+}, {
+  "name": "Tin",
+  "description": "http://theglobeandmail.com/quam/pharetra/magna/ac/consequat/metus.js",
+  "price": "awhapham1v@dailymotion.com"
+}, {
+  "name": "Temp",
+  "description": "http://webnode.com/viverra/eget/congue.jsp",
+  "price": "crowesby1w@freewebs.com"
+}, {
+  "name": "Cookley",
+  "description": "https://intel.com/sed/nisl/nunc.js",
+  "price": "tdodman1x@wikia.com"
+}, {
+  "name": "Stronghold",
+  "description": "http://netlog.com/id/nisl/venenatis/lacinia/aenean.jsp",
+  "price": "lfarquhar1y@google.fr"
+}, {
+  "name": "Zoolab",
+  "description": "http://toplist.cz/rhoncus.png",
+  "price": "tjanssens1z@nps.gov"
+}, {
+  "name": "Ronstring",
+  "description": "https://springer.com/primis/in/faucibus/orci/luctus/et/ultrices.jsp",
+  "price": "njahnig20@spiegel.de"
+}, {
+  "name": "Gembucket",
+  "description": "https://accuweather.com/integer/aliquet.js",
+  "price": "esabatini21@usgs.gov"
+}, {
+  "name": "Holdlamis",
+  "description": "http://ning.com/quam.js",
+  "price": "alucey22@tuttocitta.it"
+}, {
+  "name": "Mat Lam Tam",
+  "description": "http://businessinsider.com/luctus/et/ultrices/posuere/cubilia/curae.jpg",
+  "price": "csayse23@macromedia.com"
+}, {
+  "name": "Aerified",
+  "description": "https://tinypic.com/magna.jsp",
+  "price": "rjellybrand24@uiuc.edu"
+}, {
+  "name": "Opela",
+  "description": "https://wsj.com/rhoncus/mauris/enim.jsp",
+  "price": "srobinet25@nationalgeographic.com"
+}, {
+  "name": "Rank",
+  "description": "http://cisco.com/accumsan/felis/ut/at/dolor/quis.js",
+  "price": "bscriviner26@uiuc.edu"
+}, {
+  "name": "Subin",
+  "description": "http://ebay.co.uk/etiam/justo/etiam/pretium.png",
+  "price": "cbowgen27@ezinearticles.com"
+}, {
+  "name": "Tresom",
+  "description": "https://ustream.tv/faucibus/orci/luctus/et/ultrices/posuere.xml",
+  "price": "tstirman28@histats.com"
+}, {
+  "name": "Redhold",
+  "description": "http://tiny.cc/scelerisque/mauris/sit/amet/eros/suspendisse/accumsan.js",
+  "price": "tavramovich29@hc360.com"
+}, {
+  "name": "Treeflex",
+  "description": "https://accuweather.com/et/tempus/semper/est/quam.png",
+  "price": "asharples2a@blogs.com"
+}, {
+  "name": "Otcom",
+  "description": "http://free.fr/lorem/id/ligula.jsp",
+  "price": "ybullard2b@java.com"
+}, {
+  "name": "Biodex",
+  "description": "http://uiuc.edu/ipsum/dolor/sit.json",
+  "price": "rpierri2c@google.es"
+}, {
+  "name": "Bitchip",
+  "description": "http://nyu.edu/id/turpis/integer/aliquet/massa.jsp",
+  "price": "gfrostdicke2d@google.com.hk"
+}, {
+  "name": "Aerified",
+  "description": "http://nasa.gov/magnis/dis/parturient/montes/nascetur/ridiculus.js",
+  "price": "asissons2e@bloglines.com"
+}, {
+  "name": "Tempsoft",
+  "description": "http://live.com/tellus/semper/interdum/mauris.js",
+  "price": "areuben2f@is.gd"
+}, {
+  "name": "Pannier",
+  "description": "http://twitter.com/curabitur/gravida/nisi/at/nibh.jpg",
+  "price": "dbeddoe2g@about.me"
+}, {
+  "name": "Bamity",
+  "description": "https://ustream.tv/rutrum/nulla/nunc/purus.json",
+  "price": "astuttman2h@army.mil"
+}, {
+  "name": "Bigtax",
+  "description": "https://hhs.gov/quam/suspendisse/potenti/nullam/porttitor/lacus/at.jpg",
+  "price": "vfilby2i@usnews.com"
+}, {
+  "name": "Sonair",
+  "description": "http://booking.com/porta/volutpat.aspx",
+  "price": "vclausewitz2j@ucsd.edu"
+}, {
+  "name": "Flexidy",
+  "description": "https://theglobeandmail.com/vel/augue/vestibulum/rutrum/rutrum/neque.js",
+  "price": "rmussen2k@storify.com"
+}, {
+  "name": "Tampflex",
+  "description": "https://theglobeandmail.com/justo/aliquam/quis/turpis/eget.js",
+  "price": "mvassano2l@pagesperso-orange.fr"
+}, {
+  "name": "Bigtax",
+  "description": "https://xinhuanet.com/magna/vestibulum/aliquet/ultrices/erat/tortor.png",
+  "price": "mbroad2m@technorati.com"
+}, {
+  "name": "Stronghold",
+  "description": "http://opera.com/dictumst/morbi/vestibulum/velit/id.png",
+  "price": "zbrownstein2n@house.gov"
+}, {
+  "name": "Fintone",
+  "description": "https://dropbox.com/eu.html",
+  "price": "cgatling2o@liveinternet.ru"
+}, {
+  "name": "Greenlam",
+  "description": "http://seesaa.net/nisl/duis/ac.png",
+  "price": "sthow2p@vistaprint.com"
+}, {
+  "name": "Holdlamis",
+  "description": "http://spotify.com/volutpat.json",
+  "price": "gburn2q@slideshare.net"
+}, {
+  "name": "Tresom",
+  "description": "https://rakuten.co.jp/elementum/eu/interdum.json",
+  "price": "mwoodwin2r@issuu.com"
+}]
+
+for product in products:
+    r = requests.post(PRODUCTS_URL, data=product)
