@@ -11,3 +11,9 @@ source env/bin/activate
 pip install -r requirements.txt
 ./manage.py runserver
 ```
+
+To seed data into your db, I have created a script called `load_data.py`. To use it just run your server and on another terminal write: 
+
+```shell
+python load_data.py
+```
